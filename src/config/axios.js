@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create axios instance with base configuration
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5000/api/reports',
+  baseURL: 'https://elpatron-server-4fd1ac305365.herokuapp.com/api/reports',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
