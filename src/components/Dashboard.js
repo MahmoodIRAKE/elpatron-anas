@@ -139,12 +139,12 @@ const Dashboard = () => {
             selectedMonth={selectedMonth}
           />*/}
           
-          {/* <BranchStatusReport 
+          <BranchStatusReport 
             viewMode={viewMode}
             selectedBranch={selectedBranch}
             selectedYear={selectedYear}
             selectedMonth={selectedMonth}
-          /> */}
+          />
           
           <BranchAnalyticsReport 
             viewMode={viewMode}
