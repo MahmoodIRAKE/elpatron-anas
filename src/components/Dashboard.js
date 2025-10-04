@@ -11,10 +11,11 @@ import {
 } from '../store';
 import BranchSelector from './BranchSelector';
 import YearMonthFilter from './YearMonthFilter';
-import AllBranchesReport from './reports/AllBranchesReport';
+// import AllBranchesReport from './reports/AllBranchesReport';
 import BranchStatusReport from './reports/BranchStatusReport';
 import BranchAnalyticsReport from './reports/BranchAnalyticsReport';
 import TopCustomersReport from './reports/TopCustomersReport';
+import OrdersDashboard from './OrdersDashboard';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -30,6 +31,7 @@ const Dashboard = () => {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [viewMode, setViewMode] = useState('cards'); // 'cards' or 'charts'
+  const [currentView, setCurrentView] = useState('reports'); // 'reports' or 'orders'
 
   // Fetch data on component mount
   useEffect(() => {
@@ -72,6 +74,10 @@ const Dashboard = () => {
     setViewMode(mode);
   };
 
+  const handleViewChange = (view) => {
+    setCurrentView(view);
+  };
+
   if (allBranchesLoading) {
     return (
       <div className="dashboard-loading">
@@ -97,6 +103,21 @@ const Dashboard = () => {
         <div className="dashboard-title">
           <h1>ElpatronReports Dashboard</h1>
           <p>Comprehensive business analytics and reporting</p>
+        </div>
+        
+        <div className="dashboard-navigation">
+          <button
+            className={`nav-btn ${currentView === 'reports' ? 'active' : ''}`}
+            onClick={() => handleViewChange('reports')}
+          >
+            📊 Reports Dashboard
+          </button>
+          <button
+            className={`nav-btn ${currentView === 'orders' ? 'active' : ''}`}
+            onClick={() => handleViewChange('orders')}
+          >
+            📋 Orders Dashboard
+          </button>
         </div>
         
         <div className="dashboard-controls">
@@ -131,35 +152,39 @@ const Dashboard = () => {
       </header>
 
       <main className="dashboard-content">
-        <div className="reports-grid">
-          {/*<AllBranchesReport 
-            viewMode={viewMode}
-            selectedBranch={selectedBranch}
-            selectedYear={selectedYear}
-            selectedMonth={selectedMonth}
-          />*/}
-          
-          <BranchStatusReport 
-            viewMode={viewMode}
-            selectedBranch={selectedBranch}
-            selectedYear={selectedYear}
-            selectedMonth={selectedMonth}
-          />
-          
-          <BranchAnalyticsReport 
-            viewMode={viewMode}
-            selectedBranch={selectedBranch}
-            selectedYear={selectedYear}
-            selectedMonth={selectedMonth}
-          />
-          
-          <TopCustomersReport 
-            viewMode={viewMode}
-            selectedBranch={selectedBranch}
-            selectedYear={selectedYear}
-            selectedMonth={selectedMonth}
-          />
-        </div>
+        {currentView === 'reports' ? (
+          <div className="reports-grid">
+            {/*<AllBranchesReport 
+              viewMode={viewMode}
+              selectedBranch={selectedBranch}
+              selectedYear={selectedYear}
+              selectedMonth={selectedMonth}
+            />*/}
+            
+            <BranchStatusReport 
+              viewMode={viewMode}
+              selectedBranch={selectedBranch}
+              selectedYear={selectedYear}
+              selectedMonth={selectedMonth}
+            />
+            
+            <BranchAnalyticsReport 
+              viewMode={viewMode}
+              selectedBranch={selectedBranch}
+              selectedYear={selectedYear}
+              selectedMonth={selectedMonth}
+            />
+            
+            <TopCustomersReport 
+              viewMode={viewMode}
+              selectedBranch={selectedBranch}
+              selectedYear={selectedYear}
+              selectedMonth={selectedMonth}
+            />
+          </div>
+        ) : (
+          <OrdersDashboard />
+        )}
       </main>
     </div>
   );

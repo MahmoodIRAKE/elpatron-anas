@@ -9,13 +9,14 @@ import branchStatusReducer from './slices/branchStatusSlice';
 import branchAnalyticsReducer from './slices/branchAnalyticsSlice';
 import topCustomersReducer from './slices/topCustomersSlice';
 import ordersPDFReducer from './slices/ordersPDFSlice';
+import ordersByBranchReducer from './slices/ordersByBranchSlice';
 
 // Persist config
 const persistConfig = {
   key: 'root',
   storage,
   whitelist: ['allBranches', 'branchStatus', 'branchAnalytics', 'topCustomers'], // Only persist these reducers
-  blacklist: ['ordersPDF'], // Don't persist PDF state
+  blacklist: ['ordersPDF', 'ordersByBranch'], // Don't persist PDF and orders state
 };
 
 // Root reducer
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   branchAnalytics: branchAnalyticsReducer,
   topCustomers: topCustomersReducer,
   ordersPDF: ordersPDFReducer,
+  ordersByBranch: ordersByBranchReducer,
 });
 
 // Persisted reducer

@@ -9,13 +9,14 @@ const ReportCard = ({
   children, 
   loading = false, 
   error = null,
+  value,
   viewMode = 'cards'
 }) => {
   if (loading) {
     return (
       <div className="report-card loading">
         <div className="card-header">
-          <h3>{title}</h3>
+          <h4>{title}</h4>
         </div>
         <div className="card-content">
           <div className="loading-state">
@@ -50,13 +51,15 @@ const ReportCard = ({
           <h3>{title}</h3>
           {subtitle && <p className="subtitle">{subtitle}</p>}
         </div>
-        <div className="view-mode-indicator">
-          {viewMode === 'charts' ? '📈 Charts' : '📊 Cards'}
-        </div>
+          <div className="view-mode-indicator">
+            {viewMode === 'charts' ? '📈 Charts' : '📊 Cards'}
+          </div>
+          
       </div>
       
       {stats.length > 0 && (
         <div className="stats-grid">
+          
           {stats.map((stat, index) => (
             <div key={index} className="stat-item">
               <div className="stat-icon" style={{ backgroundColor: stat.color + '20' }}>
@@ -74,6 +77,7 @@ const ReportCard = ({
       )}
       
       <div className="card-content">
+        {value && <div className="value">{value}</div>}
         {children}
       </div>
     </div>
