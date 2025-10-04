@@ -153,12 +153,12 @@ const Dashboard = () => {
             selectedMonth={selectedMonth}
           />
           
-          {/* <TopCustomersReport 
+          <TopCustomersReport 
             viewMode={viewMode}
             selectedBranch={selectedBranch}
             selectedYear={selectedYear}
             selectedMonth={selectedMonth}
-          /> */}
+          />
         </div>
       </main>
     </div>
