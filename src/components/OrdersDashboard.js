@@ -45,6 +45,20 @@ const OrdersDashboard = () => {
     }
   }, [branches]);
 
+  const creditOrdersTotal = orders
+      .filter(order => order.paymentMethod === 'credit')
+      .reduce((sum, order) => sum + order.totalPrice, 0);
+
+   
+    
+    const cashOrdersTotal = orders
+      .filter(order => order.paymentMethod === 'cash')
+      .reduce((sum, order) => sum + order.totalPrice, 0);
+    
+    const allOrdersTotal = orders
+      .reduce((sum, order) => sum + order.totalPrice, 0);
+
+
   const handleBranchChange = (branchId) => {
     setSelectedBranch(branchId);
     setCurrentPage(1);
@@ -85,10 +99,11 @@ const OrdersDashboard = () => {
   };
 
   const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD'
-    }).format(amount);
+    return amount;
+    // return new Intl.NumberFormat('en-US', {
+    //   style: 'currency',
+    //   currency: 'USD'
+    // }).format(amount);
   };
 
   const renderPagination = () => {
@@ -154,22 +169,13 @@ const OrdersDashboard = () => {
     }
 
     // Fallback to current orders if no summary available (shouldn't happen in normal flow)
-    const creditOrdersTotal = orders
-      .filter(order => order.paymentMethod === 'credit')
-      .reduce((sum, order) => sum + order.totalPrice, 0);
-    
-    const cashOrdersTotal = orders
-      .filter(order => order.paymentMethod === 'cash')
-      .reduce((sum, order) => sum + order.totalPrice, 0);
-    
-    const allOrdersTotal = orders
-      .reduce((sum, order) => sum + order.totalPrice, 0);
+  
 
     return {
       ordersCount: orders.length,
-      creditOrdersTotal,
-      cashOrdersTotal,
-      allOrdersTotal
+      creditOrdersTotal:creditOrdersTotal,
+      cashOrdersTotal:cashOrdersTotal,
+      allOrdersTotal:allOrdersTotal
     };
   };
 
@@ -185,19 +191,19 @@ const OrdersDashboard = () => {
       },
       {
         title: 'Credit Orders Total',
-        value: formatCurrency(filteredTotals.creditOrdersTotal),
+        value: creditOrdersTotal,
         icon: '💳',
         color: '#6f42c1'
       },
       {
         title: 'Cash Orders Total',
-        value: formatCurrency(filteredTotals.cashOrdersTotal),
+        value: cashOrdersTotal,
         icon: '💵',
         color: '#20c997'
       },
       {
         title: 'All Orders Total',
-        value: formatCurrency(filteredTotals.allOrdersTotal),
+        value: allOrdersTotal,
         icon: '💰',
         color: '#28a745'
       }
